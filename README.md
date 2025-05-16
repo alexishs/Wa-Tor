@@ -2,6 +2,15 @@
 
 Wa-Tor est une simulation d’écosystème dans un environnement aquatique. Le monde est représenté par une grille torique où vivent deux types d'agents : les poissons 🐟 et les requins 🦈. Chaque agent suit des règles de reproduction, de déplacement et de survie, simulant une dynamique de population.
 
+## Création du projet
+
+Ce projet est, à l'origine, un travail de groupe dans le cadre d'une formation à Python effectué à [Simplon Hauts-de-France](https://www.simplon.co/).
+
+Ce dépot est un fork du dépot commun https://github.com/Flockyy/Wa-Tor qui a été conjointement créé
+avec [Flockyy](https://github.com/Flockyy) et [CVincent27](https://github.com/CVincent27).
+
+La branche [projet-apres-fork](https://github.com/alexishs/Wa-Tor/tree/projet-apres-fork) est une archive du travail effectué en commun.
+
 ## 🔧 Requirements
 
 Ce projet nécessite Python 3.7 ou plus récent. Pour installer les dépendances :
