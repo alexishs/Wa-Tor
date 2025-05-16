@@ -3,7 +3,7 @@
 echo $CHRONON
 
 SIMULATION="python \
-../main.py \
+../wa-tor-cli.py \
 --auto=$AUTO \
 --chronon=$CHRONON \
 --hauteur=$HAUTEUR \
