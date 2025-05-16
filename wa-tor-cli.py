@@ -2,8 +2,8 @@ import os
 from time import sleep
 from monde import Monde
 import argparse
-from ocean import Coordonnees
-from scenari import Scenario
+from ocean import Ocean, Coordonnees
+from scenari import Scenari, Scenario
 
 MODE_DEBUG = False  # ça marche pas. (getattr(sys, 'gettrace', None) is not None)
 
@@ -34,12 +34,12 @@ def parse_args():
     """Analyse les arguments de la ligne de commande pour configurer la simulation Wa-Tor."""
 
     parser = argparse.ArgumentParser(description="Wa-tor simulation")
-    # parser.add_argument(
-    #    "--menu",
-    #    type=str,
-    #    default="OUI",
-    #    help="Afficher le menu (OUI ou NON)"
-    # )
+    parser.add_argument(
+       "--menu",
+       type=str,
+       default="OUI",
+       help="Afficher le menu (OUI ou NON)"
+    )
     parser.add_argument(
         "--auto",
         "-a",
@@ -132,6 +132,22 @@ def parse_args():
     )
     return parser.parse_args()
 
+def afficher_ocean(ocean: Ocean)-> None:
+    for ligne in range(ocean.lignes):
+        for colonne in range(ocean.colonnes):
+            if (
+                ocean.valeur_coordonnees(Coordonnees(ligne, colonne))
+                == None
+            ):
+                print("·", end=" ")
+            else:
+                print(
+                    ocean.valeur_coordonnees(
+                        Coordonnees(ligne, colonne)
+                    ).caractere_symbole(),
+                    end=" ",
+                )
+        print()
 
 def lancer(
     automatique: bool,
@@ -196,21 +212,7 @@ def lancer(
             os.system("cls" if os.name == "nt" else "clear")
             print(f"Cycle {cnt + 1}/{nb_cycles}")
             monde.executer_cycle()
-            for ligne in range(hauteur):
-                for colonne in range(largeur):
-                    if (
-                        monde.ocean.valeur_coordonnees(Coordonnees(ligne, colonne))
-                        == None
-                    ):
-                        print("·", end=" ")
-                    else:
-                        print(
-                            monde.ocean.valeur_coordonnees(
-                                Coordonnees(ligne, colonne)
-                            ).caractere_symbole(),
-                            end=" ",
-                        )
-                print()
+            afficher_ocean(monde.ocean)
             cnt += 1
             sleep(0.1)
     else:
@@ -222,21 +224,7 @@ def lancer(
                 os.system("cls" if os.name == "nt" else "clear")
             monde.executer_cycle()
             print(f"Cycle {cnt + 1}")
-            for ligne in range(hauteur):
-                for colonne in range(largeur):
-                    if (
-                        monde.ocean.valeur_coordonnees(Coordonnees(ligne, colonne))
-                        == None
-                    ):
-                        print("·", end=" ")
-                    else:
-                        print(
-                            monde.ocean.valeur_coordonnees(
-                                Coordonnees(ligne, colonne)
-                            ).caractere_symbole(),
-                            end=" ",
-                        )
-                print()
+            afficher_ocean(monde.ocean)
             cnt += 1
             if (
                 input(
@@ -293,36 +281,36 @@ def main():
     Returns:
         None
     """
-    # if (args.menu == "OUI"):
-    #    scenari = Scenari()
-    #    print("Bienvenue dans WA-TOR !")
-    #    while True:
-    #        print("Choisissez un scenario :")
-    #        liste_libelles = scenari.liste_libelles()
-    #        liste_libelles.append("Quitter le programme")
-    #        choix = demander_choix_menu(liste_libelles)
-    #        if choix == (len(liste_libelles) - 1):
-    #            break
-    #        else:
-    #            selection_scenario(scenario = scenari.scenario(choix))
-    # else:
     args = parse_args()
-    lancer(
-        (args.auto == "OUI"),
-        args.chronon,
-        args.hauteur,
-        args.largeur,
-        args.nb_requin,
-        args.nb_proie,
-        args.cycle_reproduction_requin,
-        args.cycle_reproduction_proie,
-        args.visibilite_requin,
-        args.visibilite_proie,
-        (args.vue_arriere_requin == "OUI"),
-        (args.vue_arriere_proie == "OUI"),
-        args.points_de_vie_requin,
-        args.points_par_repas_requin,
-    )
+    if (args.menu == "OUI"):
+       scenari = Scenari()
+       print("Bienvenue dans WA-TOR !")
+       while True:
+           print("Choisissez un scenario :")
+           liste_libelles = scenari.liste_libelles()
+           liste_libelles.append("Quitter le programme")
+           choix = demander_choix_menu(liste_libelles)
+           if choix == (len(liste_libelles) - 1):
+               break
+           else:
+               selection_scenario(scenario = scenari.scenario(choix))
+    else:
+        lancer(
+            (args.auto == "OUI"),
+            args.chronon,
+            args.hauteur,
+            args.largeur,
+            args.nb_requin,
+            args.nb_proie,
+            args.cycle_reproduction_requin,
+            args.cycle_reproduction_proie,
+            args.visibilite_requin,
+            args.visibilite_proie,
+            (args.vue_arriere_requin == "OUI"),
+            (args.vue_arriere_proie == "OUI"),
+            args.points_de_vie_requin,
+            args.points_par_repas_requin,
+        )
 
 
 if __name__ == "__main__":
