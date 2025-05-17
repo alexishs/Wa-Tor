@@ -1,98 +1,37 @@
-# 🌊 Wa-Tor – Simulateur de monde aquatique
+# 🌊 Wa-Tor
 
-Wa-Tor est une simulation d’écosystème dans un environnement aquatique. Le monde est représenté par une grille torique où vivent deux types d'agents : les poissons 🐟 et les requins 🦈. Chaque agent suit des règles de reproduction, de déplacement et de survie, simulant une dynamique de population.
+Ce projet est la continuité d'un travail de groupe datant de mai 2024 (voir la rubrique *Origine du projet et remerciements*.)
 
-## 🔧 Requirements
+## Qu'est-ce que Wa-Tor ?
 
-Ce projet nécessite Python 3.7 ou plus récent. Pour installer les dépendances :
+Wa-Tor est une simulation d’écosystème dans un environnement aquatique. Wa-Tor est « planète » **torique** (représentable par une carte infinie : lorsque l'on dépasse un bord, on se retrouve sur le bord opposé).
+
+La planète est entièrement recouverte par un océan dans lequel vivent deux types de poissons : les requins 🦈 et les proies 🐟. Chaque agent (requin ou proie) suit des règles de reproduction, de déplacement et de survie, simulant une dynamique de population.
+
+[Voir la page Wikipedia](https://en.wikipedia.org/wiki/Wa-Tor).
+
+## 🔧 Installation et configuration requise
+
+Ce projet nécessite Git et Python 3.7 ou plus récent (développement effectué avec Python 3.13).
+
+Récupération du dépôt (via le lien public en https) et installation sous Linux/macOS/*BSD…  :
 
 ```bash
+# récupération du dépôt dans un nouveau sous-répertoire au répertoire courant :
+git clone https://github.com/alexishs/Wa-Tor.git
+# Le dépôt est téléchargé dans le répertoire créé Wa-Tor.
+# On se déplace dans ce sous-répertoire :
+cd ./Wa-Tor
+# Configuration de l'environnement avec venv :
+python -m venv .venv
+source .venv/bin/activate
+# Installation des dépendances avec PIP
 pip install -r requirements.txt
 ``` 
 
 ## Version en mode texte
 
-### ⚙️ Arguments disponibles
-
-La version en **mode texte** (wa-tor-cli-) peut être exécuté avec les arguments suivants :
-
-#### --menu
-
-default=OUI,
-Afficher le menu (OUI ou NON)
-
-#### --auto, -a [str]
-
-default=NON
-Automatiser la simulation (OUI ou NON)
-
-#### --chronon, -c [int]
-
-default=100
-Nombre d'étapes de simulation si activation paramètre --auto=OUI (cycle de vie)
-
-#### --hauteur, -H [int]
-
-default=30
-Nombre de lignes dans la grille
-
-#### --largeur, -l [int]
-
-default=30
-Nombre de colonnes dans la grille
-
-#### --nb-proie, -p [int]
-
-default=40
-Nombre de proies à placer dans la grille
-
-#### --nb-requin, -r [int]
-
-default=15
-Nombre de requins à placer dans la grille
-
-#### --cycle-reproduction-requin [int]
-
-default=12
-Nombre de cycles entre chaque reproduction des requins
-
-#### --cycle-reproduction-proie [int]
-
-default=8
-Nombre de cycles entre chaque reproduction des proies
-
-#### --visibilite-requin [int]
-
-default=1
-Distance en cellules pour la vision des requins
-
-#### --visibilite-proie [int]
-
-default=1
-Distance en cellules pour la vision des proies
-
-#### --vue_arriere-requin [str]
-
-default=OUI
-Capacité des requins à détecter les proies à distance derrière eux
-
-#### --vue_arriere-proie [str]
-
-default=OUI
-Capacité des proies à détecter les requins à distance derrière eux
-
-#### --points-de-vie-requin [int]
-
-default=12
-Points de vie du requin (réduit de 1 à chaque cycle)
-
-#### --points-par-repas-requin [int]
-
-default=6
-Points de recharge par proie mangée
-
-### ▶️ Exemple d'utilisation
-Exécution dans le terminal (les paramètres ci-dessus peuvent être appliqué) :
+La version en **mode texte** (wa-tor-cli.py) peut être exécuté avec la commande :
 ```bash
 python wa-tor-cli.py 
 ``` 
@@ -100,16 +39,77 @@ La liste des paramètres disponibles peut être rappelée avec cette commande :
 ```bash
 python wa-tor-cli.py -h
 ```
+### ⚙️ Arguments disponibles
 
-## Exécution avec interface en pygame :
+ * --menu
+        default=OUI,
+        Afficher le menu (OUI ou NON)
+
+ * --auto, -a [str]
+        default=NON
+        Automatiser la simulation (OUI ou NON)
+
+ * --chronon, -c [int]
+        default=100
+        Nombre d'étapes de simulation si activation paramètre --auto=OUI (cycle de vie)
+
+ * --hauteur, -H [int]
+        default=30
+        Nombre de lignes dans la grille
+
+ * --largeur, -l [int]
+        default=30
+        Nombre de colonnes dans la grille
+
+ * --nb-proie, -p [int]
+        default=40
+        Nombre de proies à placer dans la grille
+
+ * --nb-requin, -r [int]
+        default=15
+        Nombre de requins à placer dans la grille
+
+ * --cycle-reproduction-requin [int]
+        default=12
+        Nombre de cycles entre chaque reproduction des requins
+
+ * --cycle-reproduction-proie [int]
+        default=8
+        Nombre de cycles entre chaque reproduction des proies
+
+ * --visibilite-requin [int]
+        default=1
+        Distance en cellules pour la vision des requins
+
+ * --visibilite-proie [int]
+        default=1
+        Distance en cellules pour la vision des proies
+
+ * --vue_arriere-requin [str]
+        default=OUI
+        Capacité des requins à détecter les proies à distance derrière eux
+
+ * --vue_arriere-proie [str]
+        default=OUI
+        Capacité des proies à détecter les requins à distance derrière eux
+
+ * --points-de-vie-requin [int]
+        default=12
+        Points de vie du requin (réduit de 1 à chaque cycle)
+
+ * --points-par-repas-requin [int]
+        default=6
+        Points de recharge par proie mangée
+
+## Version avec interface graphique en pygame :
 ```bash
-python main_pygame.py 
-``` 
+python wa-tor-gui.py 
+```
 
 ## 📁 Structure du projet
 ```plaintext
 Wa-Tor/
-├── main.py                # Script principal pour exécuter la simulation en ligne de commande
+├── wa-tor-cli.py                # Script principal pour exécuter la simulation en ligne de commande
 ├── main_pygame.py         # Script principal pour exécuter la simulation avec interface pygame
 ├── requirements.txt       # Fichier listant les dépendances nécessaires
 ├── README.md              # Documentation du projet
@@ -124,15 +124,16 @@ Wa-Tor/
 
 ## Origine du projet et remerciements
 
-Ce projet est, à l'origine, un travail de groupe dans le cadre d'une formation à Python effectué à [Simplon Hauts-de-France](https://www.simplon.co/).
+Ce projet est, à l'origine, un travail de groupe dans le cadre d'une formation à Python effectué à [Simplon Hauts-de-France](https://www.simplon.co/) qui a été rendu le vendredi 16 mai 2025.
 
 Ce dépot est un fork du dépot commun https://github.com/Flockyy/Wa-Tor qui a été conjointement créé
-avec [Florian - Flockyy](https://github.com/Flockyy) et [Vincent - CVincent27](https://github.com/CVincent27).
+avec [Florian (Flockyy)](https://github.com/Flockyy) et [Vincent (CVincent27)](https://github.com/CVincent27).
 
 ***Tous les commits effectués jusqu'au 15/05/2025 sont issus du travail en commun.*** 
 
 La branche [projet-avant-fork](https://github.com/alexishs/Wa-Tor/tree/projet-avant-fork) est une archive du travail effectué en commun.
-## 🤝👥 Membres et contributions
+
+### 🤝👥 Contributions dans le projet commun d'origine
 
 Tout le monde a plus ou moin touché à toutes les fonctionalités mais dans les grandes lignes :
 
@@ -153,4 +154,3 @@ Tout le monde a plus ou moin touché à toutes les fonctionalités mais dans les
     - Proie
     - Requin
     - Monde
-
