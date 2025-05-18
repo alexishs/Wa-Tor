@@ -1,14 +1,26 @@
 # 🌊 Wa-Tor
 
-Ce projet est la continuité d'un travail de groupe datant de mai 2024 (voir la rubrique *Origine du projet et remerciements*.)
+Ce projet est la continuité d'un travail de groupe datant de mai 2024 (voir la rubrique [Origine du projet et remerciements](#origine-du-projet-et-remerciements).)
 
 ## Qu'est-ce que Wa-Tor ?
 
-Wa-Tor est une simulation d’écosystème dans un environnement aquatique. Wa-Tor est « planète » **torique** (représentable par une carte infinie : lorsque l'on dépasse un bord, on se retrouve sur le bord opposé).
+Wa-Tor est une simulation d’écosystème dans un environnement aquatique. Wa-Tor est « planète » **torique** (comme un donnut représentable par une carte infinie : lorsque l'on dépasse un bord, on se retrouve sur le bord opposé).
 
-La planète est entièrement recouverte par un océan dans lequel vivent deux types de poissons : les requins 🦈 et les proies 🐟. Chaque agent (requin ou proie) suit des règles de reproduction, de déplacement et de survie, simulant une dynamique de population.
+![Représentation de la planète Wa-Tor](ressources/planete-wa-tor.jpg)
+
+La planète est entièrement recouverte par un océan dans lequel vivent deux types de poissons : les requins 🦈 et les proies 🐟. Chaque agent (requin ou proie) suit des règles de reproduction, de déplacement et de survie, simulant une dynamique de population dans un contexte de prédation.
+
+Il s'agit d'un écosystème fragile dont la modification de paramètre peut conduire à l'effondrement : l'extinction des requins prédateurs, ou celle des proies et, in fine, celle des prédateurs également.
 
 [Voir la page Wikipedia](https://en.wikipedia.org/wiki/Wa-Tor).
+
+## Wa-Tor, oui, mais avec des paramètres plus riches…
+
+### L'implémentation dans ce projet dépasse les caractéristiques premières de Wa-Tor en proposant un monde plus complexe.
+
+Sur la planète Wa-Tor originale, les poissons se déplacent sur la grille (l'océan) en fonction de leur environnement immédiat. Seule les cases immédiatement limitrophes sont prises en compte : Une proie ne détectera un requin que lorsque celui-ci se trouvera strictement à côté d'elle. De même, un requin ne détectera et ne pourra manger une proie uniquement si elle se trouve dans une case collée à la sienne.
+
+Dans cette planète-ci, les poissons peuvent être plus évolués et détecter les prédateurs ou les proies à plus ou moins grande distance, qui va d'une case à… l'ensemble de la carte. Et ça peut tout changer !
 
 ## 🔧 Installation et configuration requise
 
@@ -109,7 +121,7 @@ python wa-tor-gui.py
 ## 📁 Structure du projet
 ```plaintext
 Wa-Tor/
-├── wa-tor-cli.py                # Script principal pour exécuter la simulation en ligne de commande
+├── wa-tor-cli.py          # Script principal pour exécuter la simulation en ligne de commande
 ├── main_pygame.py         # Script principal pour exécuter la simulation avec interface pygame
 ├── requirements.txt       # Fichier listant les dépendances nécessaires
 ├── README.md              # Documentation du projet
