@@ -1,5 +1,6 @@
 import os
 from time import sleep
+import curses
 from monde import Monde
 import argparse
 from ocean import Ocean, Coordonnees
@@ -132,22 +133,29 @@ def parse_args():
     )
     return parser.parse_args()
 
-def afficher_ocean(ocean: Ocean)-> None:
+def afficher_ocean(fenetre_curses, ocean: Ocean)-> None:
+    #for ligne in range(ocean.lignes):
+    #    for colonne in range(ocean.colonnes):
+    #        if (
+    #            ocean.valeur_coordonnees(Coordonnees(ligne, colonne))
+    #            == None
+    #        ):
+    #            print("·", end=" ")
+    #        else:
+    #            print(
+    #                ocean.valeur_coordonnees(
+    #                    Coordonnees(ligne, colonne)
+    #                ).caractere_symbole(),
+    #                end=" ",
+    #            )
+    #    print()
     for ligne in range(ocean.lignes):
         for colonne in range(ocean.colonnes):
-            if (
-                ocean.valeur_coordonnees(Coordonnees(ligne, colonne))
-                == None
-            ):
-                print("·", end=" ")
+            coordonnees = Coordonnees(ligne, colonne)
+            if ocean.coordonnees_libres(coordonnees):
+                fenetre_curses.addstr(coordonnees.ligne + 1, coordonnees.colonne * 2, '·')
             else:
-                print(
-                    ocean.valeur_coordonnees(
-                        Coordonnees(ligne, colonne)
-                    ).caractere_symbole(),
-                    end=" ",
-                )
-        print()
+                fenetre_curses.addstr(coordonnees.ligne + 1, coordonnees.colonne * 2, ocean.valeur_coordonnees(coordonnees).caractere_symbole())
 
 def lancer(
     automatique: bool,
@@ -206,34 +214,46 @@ def lancer(
         points_de_vie_requin,
         points_par_repas_requin,
     )
+    ecran = curses.initscr()
+    curses.noecho()
+    curses.cbreak()
+    ecran.clear()
+    #ecran.keypad(True)
     if automatique:
         cnt = 0
         while cnt < nb_cycles:
-            os.system("cls" if os.name == "nt" else "clear")
-            print(f"Cycle {cnt + 1}/{nb_cycles}")
+            #os.system("cls" if os.name == "nt" else "clear")
+            ecran.addstr(0, 0, f"Cycle {cnt + 1}/{nb_cycles}")
+            #print(f"Cycle {cnt + 1}/{nb_cycles}")
             monde.executer_cycle()
-            afficher_ocean(monde.ocean)
+            afficher_ocean(ecran, monde.ocean)
             cnt += 1
             sleep(0.1)
     else:
+        ecran.addstr(monde.ocean.lignes + 1, 0, "Entrez Q pour quitter ou n'importe quelle autre touche pour continuer...")
         cnt = 0
         while True:
-            if MODE_DEBUG:
-                print("En debug...")
-            else:
-                os.system("cls" if os.name == "nt" else "clear")
+            #os.system("cls" if os.name == "nt" else "clear")
             monde.executer_cycle()
-            print(f"Cycle {cnt + 1}")
-            afficher_ocean(monde.ocean)
+            ecran.addstr(0, 0, f"Cycle {cnt + 1}")
+            #print(f"Cycle {cnt + 1}")
+            afficher_ocean(ecran, monde.ocean)
             cnt += 1
-            if (
-                input(
-                    "Entrez Q pour quitter ou n'importe quelle autre touche pour continuer..."
-                ).lower()
-                == "q"
-            ):
+            #if (
+            #    input(
+            #        "Entrez Q pour quitter ou n'importe quelle autre touche pour continuer..."
+            #    ).lower()
+            #    == "q"
+            #):
+            if (ecran.getkey().lower() == "q"):
                 break
+    curses.nocbreak()
+    #ecran.keypad(False)
+    curses.echo()
+    curses.endwin()
+    print()
     print("Simulation terminée.")
+    print()
 
 
 def selection_scenario(scenario: Scenario) -> None:
