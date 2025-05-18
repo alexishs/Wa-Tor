@@ -4,7 +4,7 @@ Ce projet est la continuité d'un travail de groupe datant de mai 2024 (voir la 
 
 ## Qu'est-ce que Wa-Tor ?
 
-Wa-Tor est une simulation d’écosystème dans un environnement aquatique. Wa-Tor est « planète » **torique** (comme un donnut représentable par une carte infinie : lorsque l'on dépasse un bord, on se retrouve sur le bord opposé).
+Wa-Tor est une simulation d’écosystème dans un environnement aquatique. Wa-Tor est une « planète » **torique** (comme un donnut représentable par une carte infinie : lorsque l'on dépasse un bord, on se retrouve sur le bord opposé).
 
 ![Représentation de la planète Wa-Tor](ressources/planete-wa-tor.jpg)
 

@@ -132,16 +132,30 @@ class Ocean:
     @property
     def colonnes(self):
         return self.__colonnes
+    
+    def rechercher_coordonnees_vides(self) -> Coordonnees | None:
+        """Retourne les coordonnées d'une cellule vide aléatoire.
+        S'il n'y a plus aucune cellule vide disponible, alors retourne None
 
-    # @property
-    # def grille(self):
-    #    return self.__grille
+        Returns:
+            Coordonnees | None
+        """
+        liste_cellules_vides = []
+        for ligne in range(self.lignes):
+            for colonne in range(self.colonnes):
+                coordonnees = Coordonnees(ligne, colonne)
+                if self.infos_coordonnees(coordonnees) is None:
+                    liste_cellules_vides.append(coordonnees)
+        if len(liste_cellules_vides) == 0:
+            return None
+        else:
+            return random.choice(liste_cellules_vides)
 
-    def placer_proie(self, proie, coordonnees: Coordonnees):
+    def placer_objet(self, instance, coordonnees: Coordonnees):
         """Place une proie dans la grille à la position donnée.
 
         Args:
-            proie (Proie): L'objet proie à placer.
+            instance (Object): L'instance à placer.
             ligne (int): La ligne de la grille.
             colonne (int): La colonne de la grille.
         """
@@ -149,25 +163,9 @@ class Ocean:
             0 <= coordonnees.ligne < self.__lignes
             and 0 <= coordonnees.colonne < self.__colonnes
         ):
-            self.__grille[coordonnees.ligne][coordonnees.colonne] = proie
+            self.__grille[coordonnees.ligne][coordonnees.colonne] = instance
         else:
-            raise IndexError("Position en dehors des limites de la grille.")
-
-    def placer_requin(self, requin, coordonnees: Coordonnees):
-        """Place un requin dans la grille à la position donnée.
-
-        Args:
-            requin (Requin): L'objet requin à placer.
-            ligne (int): La ligne de la grille.
-            colonne (int): La colonne de la grille.
-        """
-        if (
-            0 <= coordonnees.ligne < self.__lignes
-            and 0 <= coordonnees.colonne < self.colonnes
-        ):
-            self.__grille[coordonnees.ligne][coordonnees.colonne] = requin
-        else:
-            raise IndexError("Position en dehors des limites de la grille.")
+            raise IndexError("Position en dehors des limites.")
 
     def effectuer_deplacement(
         self,
