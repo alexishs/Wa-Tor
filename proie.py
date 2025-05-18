@@ -84,7 +84,7 @@ class Proie(Poisson):
                 if self.vue_arriere or (
                     direction != Direction.direction_inverse(direction_choisie)
                 ):
-                    coordonnees_requin = self.rechercher_poisson(
+                    coordonnees_requin = self._rechercher_poisson(
                         coordonnees, direction, "Requin"
                     )
                     if coordonnees_requin:
@@ -127,4 +127,4 @@ class Proie(Poisson):
         # alors cela signifie que la proie est complètement entourée,
         # ou que quelque soit la direction, on se retrouve à côté d'un requin...
 
-        self.action_deplacement(coordonnees, direction_choisie)
+        self._action_deplacement(coordonnees, direction_choisie)

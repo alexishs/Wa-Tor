@@ -26,7 +26,7 @@ Dans cette planète-ci, les poissons peuvent être plus évolués et détecter l
 
 Ce projet nécessite Git et Python 3.7 ou plus récent (développement effectué avec Python 3.13).
 
-Récupération du dépôt (via le lien public en https) et installation sous Linux/macOS/*BSD…  :
+Récupération du dépôt (via le lien public en https) et installation sous Linux/macOS  :
 
 ```bash
 # récupération du dépôt dans un nouveau sous-répertoire au répertoire courant :

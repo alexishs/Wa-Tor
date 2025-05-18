@@ -56,7 +56,7 @@ class Poisson(ABC):
     def caractere_symbole(self) -> str:
         pass
 
-    def action_deplacement(
+    def _action_deplacement(
         self, coordonnees_courantes: Coordonnees, direction_choisie: Direction
     ):
         """Action à effectuer à chaque cycle par le poisson, en décidant de la direction de déplacement choisie.
@@ -84,7 +84,7 @@ class Poisson(ABC):
                 enfant,
             )
 
-    def rechercher_poisson(
+    def _rechercher_poisson(
         self,
         coordonnees_observation: Coordonnees,
         direction_observee: Direction,

@@ -94,7 +94,7 @@ class Requin(Poisson):
                         if self.vue_arriere or (
                             direction != Direction.direction_inverse(direction)
                         ):
-                            coordonnees_proie = self.rechercher_poisson(
+                            coordonnees_proie = self._rechercher_poisson(
                                 coordonnees, direction, "Proie"
                             )
                             if coordonnees_proie != None:
@@ -161,4 +161,4 @@ class Requin(Poisson):
                 == "Proie"
             ):
                 self.__points_energie += self.__points_par_repas
-            self.action_deplacement(coordonnees, direction_choisie)
+            self._action_deplacement(coordonnees, direction_choisie)
