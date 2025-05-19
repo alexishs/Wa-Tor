@@ -44,7 +44,12 @@ class Proie(Poisson):
         Returns:
             str: Le caractère utilisé pour identifier la proie
         """
-        return "o" #"🐠"
+        if self.direction == Direction.Aucune:
+            return "o"
+        elif self.direction in (Direction.Haut, Direction.Bas):
+            return "|"
+        else:
+            return "—"
 
     def _nouvelle_instance(self):
         """Crée une nouvelle instance de la class proie avec les mêmes paramètres. Cette méthode est utilisée
