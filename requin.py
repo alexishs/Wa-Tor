@@ -41,7 +41,7 @@ class Requin(Poisson):
         Returns:
             str: Le caractère utilisé pour identifier les requins
         """
-        return "X"
+        return "X" #"🦈"
 
     def en_chasse(self) -> bool:
         """Détermine si le requin est en chasse. Le requin est considéré en chasse si ses points d'énergie sont inférieurs

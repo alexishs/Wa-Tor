@@ -133,7 +133,7 @@ def parse_args():
     )
     return parser.parse_args()
 
-def afficher_ocean(fenetre_curses, ocean: Ocean)-> None:
+def afficher_ocean(fenetre_curses, ocean: Ocean, couleurs_par_defaut: int, couleurs_requin: int, initialiser_fond: bool)-> None:
     #for ligne in range(ocean.lignes):
     #    for colonne in range(ocean.colonnes):
     #        if (
@@ -150,12 +150,18 @@ def afficher_ocean(fenetre_curses, ocean: Ocean)-> None:
     #            )
     #    print()
     for ligne in range(ocean.lignes):
+        if initialiser_fond:
+            fenetre_curses.addstr(ligne + 1, 1, '  ' * ocean.colonnes, couleurs_par_defaut)
         for colonne in range(ocean.colonnes):
             coordonnees = Coordonnees(ligne, colonne)
             if ocean.coordonnees_libres(coordonnees):
-                fenetre_curses.addstr(coordonnees.ligne + 1, coordonnees.colonne * 2, '·')
+                fenetre_curses.addstr(coordonnees.ligne + 1, coordonnees.colonne * 2, '  ', couleurs_par_defaut) 
             else:
-                fenetre_curses.addstr(coordonnees.ligne + 1, coordonnees.colonne * 2, ocean.valeur_coordonnees(coordonnees).caractere_symbole())
+                valeur = ocean.valeur_coordonnees(coordonnees)
+                if ocean.infos_coordonnees(coordonnees) == 'Requin':
+                    fenetre_curses.addstr(coordonnees.ligne + 1, coordonnees.colonne * 2, valeur.caractere_symbole(), couleurs_requin)
+                else:
+                    fenetre_curses.addstr(coordonnees.ligne + 1, coordonnees.colonne * 2, valeur.caractere_symbole(), couleurs_par_defaut)
 
 def lancer(
     automatique: bool,
@@ -219,6 +225,12 @@ def lancer(
     curses.cbreak()
     ecran.clear()
     #ecran.keypad(True)
+    curses.start_color()
+    curses.init_pair(1, curses.COLOR_YELLOW, curses.COLOR_BLUE)
+    couleurs_par_defaut = curses.color_pair(1)
+    curses.init_pair(2, curses.COLOR_BLACK, curses.COLOR_BLUE)
+    couleurs_requin = curses.color_pair(2)
+    afficher_ocean(ecran, monde.ocean, couleurs_par_defaut, couleurs_requin, True)
     if automatique:
         cnt = 0
         while cnt < nb_cycles:
@@ -226,7 +238,7 @@ def lancer(
             ecran.addstr(0, 0, f"Cycle {cnt + 1}/{nb_cycles}")
             #print(f"Cycle {cnt + 1}/{nb_cycles}")
             monde.executer_cycle()
-            afficher_ocean(ecran, monde.ocean)
+            afficher_ocean(ecran, monde.ocean, couleurs_par_defaut, couleurs_requin, False)
             cnt += 1
             sleep(0.1)
     else:
@@ -237,7 +249,7 @@ def lancer(
             monde.executer_cycle()
             ecran.addstr(0, 0, f"Cycle {cnt + 1}")
             #print(f"Cycle {cnt + 1}")
-            afficher_ocean(ecran, monde.ocean)
+            afficher_ocean(ecran, monde.ocean, couleurs_par_defaut, couleurs_requin, False)
             cnt += 1
             #if (
             #    input(

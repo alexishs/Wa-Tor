@@ -44,7 +44,7 @@ class Proie(Poisson):
         Returns:
             str: Le caractère utilisé pour identifier la proie
         """
-        return "o"
+        return "o" #"🐠"
 
     def _nouvelle_instance(self):
         """Crée une nouvelle instance de la class proie avec les mêmes paramètres. Cette méthode est utilisée
