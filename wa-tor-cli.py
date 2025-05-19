@@ -278,9 +278,15 @@ def selection_scenario(scenario: Scenario) -> None:
     Returns:
         None
     """
+    print()
     print(f"Scenario sélectionné : {scenario.libelle}")
-    print("Commentaires :")
-    print(scenario.commentaires)
+    if scenario.commentaires:
+        print(f"Commentaires : {scenario.commentaires}")
+        print()
+    print("Paramètres :")
+    for attribut in dir(scenario):
+        if (not attribut.startswith('_')) and (attribut not in ('libelle', 'commentaires')):
+            print (f"  {attribut} = {getattr(scenario,attribut)}")
     print("")
     liste_choix = ["Lancer le scenario", "Revenir au menu principal"]
     choix = demander_choix_menu(liste_choix)
