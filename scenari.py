@@ -30,7 +30,7 @@ class Scenari:
 
         # Scenario par défaut
         scenario = self.ajouter_scenario("Scenario par défaut")
-        scenario.commentaires = """
+        scenario.commentaires = """\
 Un océan de 30x30 avec des valeurs par défaut.
 Les requins et les proies n'ont aucune visibilité : ils ne détectent que les poissons à côté d\'eux !"""
         scenario.nb_lignes = 30
@@ -48,7 +48,7 @@ Les requins et les proies n'ont aucune visibilité : ils ne détectent que les p
 
         # Scenario Chasse au fugitif
         scenario = self.ajouter_scenario("Chasse au fugitif")
-        scenario.commentaires = """
+        scenario.commentaires = """\
 Une proie rescapée se retrouve chassée par 15 requins à la vue affûtée et à la grande endurance !
 La proie saura-t-elle capable de survivre jusqu'à la mort des chasseurs ?
 Durée de vie des requins : 25 chronon..."""
@@ -67,7 +67,7 @@ Durée de vie des requins : 25 chronon..."""
 
         # Scenario Rambo
         scenario = self.ajouter_scenario("Rambo s'évade !")
-        scenario.commentaires = """
+        scenario.commentaires = """\
 Comme pour dans le scenario "Chasse au fugitif", une proie rescapée se retrouve chassée...
 C'est contre 4 requins à la vue affûtée et à la grande endurance qu'il faudra survivre !
 Mais cette fois, la proie a la vue aussi affûtée que celle des requins... Rambo saura-t-il s'en sortir ?

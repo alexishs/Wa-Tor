@@ -280,8 +280,10 @@ def selection_scenario(scenario: Scenario) -> None:
     """
     print()
     print(f"Scenario sélectionné : {scenario.libelle}")
+    print()
     if scenario.commentaires:
-        print(f"Commentaires : {scenario.commentaires}")
+        print("Commentaires :")
+        print(scenario.commentaires)
         print()
     print("Paramètres :")
     for attribut in dir(scenario):
@@ -289,26 +291,27 @@ def selection_scenario(scenario: Scenario) -> None:
             print (f"  {attribut} = {getattr(scenario,attribut)}")
     print("")
     liste_choix = ["Lancer le scenario", "Revenir au menu principal"]
-    choix = demander_choix_menu(liste_choix)
-    if choix == 0:
-        lancer(
-            False,
-            0,
-            scenario.nb_lignes,
-            scenario.nb_colonnes,
-            scenario.nb_requins,
-            scenario.nb_proies,
-            scenario.cycle_reproduction_requin,
-            scenario.cycle_reproduction_proie,
-            scenario.visibilite_requin,
-            scenario.visibilite_proie,
-            scenario.vue_arriere_requin,
-            scenario.vue_arriere_proie,
-            scenario.points_vie_requin,
-            scenario.points_par_repas_requin,
-        )
-    else:
-        return
+    while True:
+        choix = demander_choix_menu(liste_choix)
+        if choix == 0:
+            lancer(
+                False,
+                0,
+                scenario.nb_lignes,
+                scenario.nb_colonnes,
+                scenario.nb_requins,
+                scenario.nb_proies,
+                scenario.cycle_reproduction_requin,
+                scenario.cycle_reproduction_proie,
+                scenario.visibilite_requin,
+                scenario.visibilite_proie,
+                scenario.vue_arriere_requin,
+                scenario.vue_arriere_proie,
+                scenario.points_vie_requin,
+                scenario.points_par_repas_requin,
+            )
+        else:
+            return
 
 
 def main():
